@@ -6,7 +6,7 @@
       <el-breadcrumb-item class="title">{{ $route.meta.name }}</el-breadcrumb-item>
       <span class="user">
         <el-avatar :size="40" src="@/assets/image/genshin.jpg'"></el-avatar>
-        <span class="username">超级管理员</span>
+          <span class="username">超级管理员</span>
       </span>
     </el-breadcrumb>
     
@@ -26,7 +26,8 @@ export default {
 
   mounted() {},
 
-  methods: {}
+  methods: {
+  }
 }
 
 </script>
@@ -38,7 +39,7 @@ export default {
   position: fixed;
   top: 0;
   padding-left: 200px;
-  background-color: $pink-color;
+  background-color: $blue-color;
 }
 .el-breadcrumb  /deep/  .el-breadcrumb__inner 
   {

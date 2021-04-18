@@ -26,8 +26,8 @@ export default {
 </script>
 <style scoped>
 .app-container{
-  width: calc( 100vw - 200px );
-  height: calc( 100vh - 50px );
+  /* width: calc( 100vw - 200px );
+  height: calc( 100vh - 50px ); */
   margin-left: 200px;
   margin-top: 50px;
 }

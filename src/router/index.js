@@ -19,12 +19,9 @@ const routes = [
   {
     path: '/Layout',
     name: 'Layout',
+    redirect: '/Layout/all-order',
     component: Layout,
     children: [
-      {
-        path: '/',
-        component: () => import('@/views/all-order')
-      },
       {
         path: 'all-order',
         component: () => import('@/views/all-order'),
@@ -37,6 +34,13 @@ const routes = [
         component: () => import('@/views/wait-order'),
         meta: {
           name: '未入住订单'
+        }
+      },
+      {
+        path: 'in-order',
+        component: () => import('@/views/in-order'),
+        meta: {
+          name: '已入住订单'
         }
       },
       {
