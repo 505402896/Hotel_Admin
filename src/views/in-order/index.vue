@@ -34,6 +34,7 @@
             <el-date-picker
               size="small"
               v-model="scope.row.outDay"
+              value-format="yyyy-MM-dd" 
               type="date"
               placeholder="选择日期">
             </el-date-picker>

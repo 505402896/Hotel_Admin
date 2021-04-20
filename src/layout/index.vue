@@ -28,6 +28,7 @@ export default {
 .app-container{
   /* width: calc( 100vw - 200px );
   height: calc( 100vh - 50px ); */
+  padding: 20px;
   margin-left: 200px;
   margin-top: 50px;
 }

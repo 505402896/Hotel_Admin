@@ -31,11 +31,7 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-.el-row{
-  margin: 20px auto;
-  margin-top: 80px;
-  .el-col{
-    margin-right: 20px;
-  }
+.el-col{
+  margin-right: 20px;
 }
 </style>

@@ -63,6 +63,13 @@ const routes = [
         meta: {
           name: '房间管理'
         }
+      },
+      {
+        path: 'data-view',
+        component: () => import('@/views/data-view'),
+        meta: {
+          name: '数据分析'
+        }
       }
     ]
   }

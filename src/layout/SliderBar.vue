@@ -36,6 +36,10 @@
                   <i class="el-icon-s-home"></i>
                   <span slot="title">房间管理</span>
                 </el-menu-item>
+                <el-menu-item index="/layout/data-view">
+                  <i class="el-icon-s-home"></i>
+                  <span slot="title">数据分析</span>
+                </el-menu-item>
                 <el-divider />
                 <el-menu-item @click="logout">
                   <i class="el-icon-setting"></i>
