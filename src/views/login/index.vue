@@ -1,18 +1,18 @@
 <!--  -->
 <template>
   <div class="container">
-    <el-form ref="form" class="form" label-width="80px">
+    <el-form ref="form" class="form" label-width="80px" v-loading="loading">
         <div class="title">
           <span>酒店后台管理系统</span>
         </div>
       <el-form-item>
-         <el-input prefix-icon="el-icon-user" v-model="username" placeholder="请输入账号" clearable />
+         <el-input prefix-icon="el-icon-user" v-model.trim="username" placeholder="请输入账号" clearable />
       </el-form-item>
       <el-form-item>
         <el-input prefix-icon="el-icon-lock" v-model="password" placeholder="请输入密码" show-password />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="large" class="btn-login" @click="login" >登录</el-button>
+        <el-button type="primary" size="large" class="btn-login" @click="login()" >登录</el-button>
       </el-form-item>
     </el-form>
     <div class="bear"></div>
@@ -24,12 +24,14 @@
 </template>
 
 <script>
+import { login } from '@/api/login/login'
 export default {
     name:'Login',
   data () {
     return {
       username: undefined,
-      password: undefined
+      password: undefined,
+      loading: false
     };
   },
 
@@ -40,8 +42,29 @@ export default {
   mounted() {},
 
   methods: {
-    login(){
-      this.$router.replace('/Layout')
+    async login(){
+      this.loading = true
+      const dataTemp = {
+        username: this.username,
+        password: this.password
+      }
+      try {
+        const data = await login(dataTemp)
+        if(data.code === 200){
+          this.$message({
+            message: data.message,
+            type: 'success'
+          })
+          localStorage.setItem("adminInfo", JSON.stringify(data.data));
+          this.$router.replace('/Layout')
+        }else{
+          this.$message.error(data.message)
+        }
+      } catch (error) {
+        console.log('登录页面', error);
+      } finally {
+        this.loading = false
+      }
     }
   }
 }
