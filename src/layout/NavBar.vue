@@ -38,6 +38,7 @@ export default {
   height: 50px;
   position: fixed;
   top: 0;
+  z-index: 9;
   padding-left: 200px;
   background-color: $blue-color;
 }

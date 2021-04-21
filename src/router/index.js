@@ -9,7 +9,10 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/Login',
@@ -77,6 +80,22 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const adminInfo = localStorage.getItem('adminInfo')
+  if (to.meta.auth) {
+    // 判断该页面是否有已记录用户信息
+    if (adminInfo) {
+      next({
+        path: '/Layout'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

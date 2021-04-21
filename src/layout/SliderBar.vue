@@ -82,7 +82,8 @@ export default {
         this.isCollapse = !this.isCollapse
       },
       logout(){
-        this.$router.replace('/')
+        localStorage.removeItem('adminInfo')
+        this.$router.replace('/Login')
       }
   }
 }
