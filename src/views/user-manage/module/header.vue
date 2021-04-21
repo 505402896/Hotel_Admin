@@ -6,7 +6,7 @@
         <el-input placeholder="根据用户名搜索" size="small" clearable v-model="username"/>
       </el-col>
       <el-col :span="2">
-        <el-button type="success" icon="el-icon-search" size="small">搜索</el-button>
+        <el-button type="success" icon="el-icon-search" size="small" @click="toSearch">搜索</el-button>
       </el-col>
     </el-row>
   </div>
@@ -14,6 +14,16 @@
 
 <script>
 export default {
+  props: {
+    search: {
+      type: String,
+      default: undefined
+    },
+    searchVal: {
+      type: String,
+      default: undefined
+    }
+  },
   data () {
     return {
       bid: undefined,
@@ -27,7 +37,12 @@ export default {
 
   mounted() {},
 
-  methods: {}
+  methods: {
+    toSearch(){
+      this.$emit('update:search', 'realName')
+      this.$emit('update:searchVal', this.username)
+    }
+  }
 }
 
 </script>
