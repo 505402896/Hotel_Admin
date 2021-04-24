@@ -2,8 +2,11 @@
 <template>
   <div class="header">
     <el-row>
-      <el-col :span="2">
-        <el-button type="primary" icon="el-icon-plus" size="small">新增</el-button>
+      <el-col :span="10">
+        <el-button type="primary" icon="el-icon-plus" size="small" @click="addRoom">新增</el-button>
+      </el-col>
+      <el-col :span="14">
+        <el-button type="primary" icon="el-icon-plus" size="small" @click="addRoomType">新增</el-button>
       </el-col>
     </el-row>
   </div>
@@ -11,6 +14,16 @@
 
 <script>
 export default {
+  props: {
+    visible: {
+      type: Boolean,
+      default: undefined
+    },
+    addRoomRow: {
+      type: Boolean,
+      default: undefined
+    }
+  },
   data () {
     return {
     };
@@ -22,12 +35,16 @@ export default {
 
   mounted() {},
 
-  methods: {}
+  methods: {
+    addRoom(){
+      this.$emit('update:addRoomRow', true)
+    },
+    addRoomType(){
+      this.$emit('update:visible', true)
+    }
+  }
 }
 
 </script>
 <style lang="scss" scoped>
-.el-col{
-  margin-right: 20px;
-}
 </style>
