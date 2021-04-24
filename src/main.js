@@ -8,6 +8,7 @@ import '@/style/theme/index.css'
 import echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts
+Vue.prototype.$imgPath = 'http://121.196.145.100:8080/Hotel/'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 new Vue({

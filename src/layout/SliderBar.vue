@@ -9,13 +9,13 @@
             @open="handleOpen" 
             @close="handleClose" 
             :collapse="isCollapse"
-            active-text-color="#00a1d6"
+            active-text-color="#fb7299"
             :default-active="currentPath"
             >
                <img @click="showNav" class="logo" :src="isCollapse ? require('@/assets/image/icon45.png') : require('@/assets/image/iconFont596.png') " alt="">
                 <el-submenu index="1">
                     <template slot="title">
-                      <i class="el-icon-s-order"></i>
+                      <i class="el-icon-tickets"></i>
                       <span slot="title">订单管理</span>
                     </template>
                     <el-menu-item-group>
@@ -29,20 +29,20 @@
                   <span slot="title">用户管理</span>
                 </el-menu-item>
                 <el-menu-item index="/layout/comment-manage">
-                  <i class="el-icon-s-comment"></i>
+                  <i class="el-icon-chat-round"></i>
                   <span slot="title">评论管理</span>
                 </el-menu-item>
                 <el-menu-item index="/layout/rooms-manage">
-                  <i class="el-icon-s-home"></i>
+                  <i class="el-icon-house"></i>
                   <span slot="title">房间管理</span>
                 </el-menu-item>
                 <el-menu-item index="/layout/data-view">
-                  <i class="el-icon-s-home"></i>
+                  <i class="el-icon-pie-chart"></i>
                   <span slot="title">数据分析</span>
                 </el-menu-item>
                 <el-divider />
                 <el-menu-item @click="logout">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-switch-button"></i>
                   <span slot="title">注销</span>
                 </el-menu-item>
             </el-menu>

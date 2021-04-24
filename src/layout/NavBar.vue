@@ -40,7 +40,7 @@ export default {
   top: 0;
   z-index: 9;
   padding-left: 200px;
-  background-color: $blue-color;
+  background-color: $pink-color;
 }
 .el-breadcrumb  /deep/  .el-breadcrumb__inner 
   {
