@@ -15,8 +15,8 @@
       <el-table-column prop="idCard" label="身份证" />
       <el-table-column prop="gender" label="性别">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.gender" type="danger" effect="plain">女</el-tag>
-          <el-tag v-else type="primary" effect="plain">男</el-tag>
+          <el-tag v-if="scope.row.gender" type="danger" effect="light"><i class="el-icon-female"></i></el-tag>
+          <el-tag v-else type="primary" effect="light"><i class="el-icon-male"></i></el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="phone" label="手机号" />

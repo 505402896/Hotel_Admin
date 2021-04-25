@@ -17,7 +17,7 @@
                 <el-select size="small" v-model="roomTypeSelected" placeholder="请选择">
                   <el-option
                     v-for="item in roomType"
-                    :key="item.value"
+                    :key="item.key"
                     :label="item.label"
                     :value="item.value">
                   </el-option>
@@ -219,8 +219,8 @@ export default {
     },
     async saveRoom(row) {
       row.hid = this.roomTypeSelected
-      row.htype = this.roomType[this.roomTypeSelected].label
-      console.log(row);
+      row.htype = this.roomType[this.roomTypeSelected - 1].label
+      
       // 提交到后台
       const data = {
         hid: row.hid,
@@ -229,17 +229,18 @@ export default {
       }
       try {
         const res = await addRoom(data)
+        this.$notify({
+          title: '成功',
+          message: res.message,
+          type: 'success'
+        })
       } catch (error) {
         console.log('增加房间', error);
       } finally {
         row.isEdit = false
+        this.addRoomRow = false
         await this.fetchDataType()
         await this.fetchDataRoom()
-        this.$notify({
-          title: '成功',
-          message: '添加成功',
-          type: 'success'
-        })
       }
     },
     cancelRoom(row) {
@@ -277,7 +278,6 @@ export default {
       }
       try {
         const res = editRoomType(data)
-        console.log(res);
       } catch (error) {
         console.log('编辑房型', error);
       } finally {
@@ -297,13 +297,17 @@ export default {
         this.loading = true
         const res = await getHotel(this.currentPageType)
         this.totalType = res.total
+        this.roomType = []
+        let index = 1
         this.roomTypeTableData = res.data.map(v => {
           let type = {
-            value: v.hid,
-            label: v.htype
+            value: index,
+            label: v.htype,
+            key: v.hid
           }
           // 存储所有房间类型
           this.roomType.push(type)
+          index++
           v.isEdit = false
           return v
         })
