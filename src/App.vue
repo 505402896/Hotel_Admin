@@ -5,5 +5,5 @@
 </template>
 
 <style lang="scss">
-@import './assets/css/base.scss'
+  @import '@/assets/css/base.scss' // 定义全局css样式
 </style>
