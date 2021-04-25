@@ -24,3 +24,11 @@ export function delRoom(data) {
     data
   })
 }
+
+export function editRoom(data) {
+  return request({
+    url: '/api/room/editRoom',
+    method: 'post',
+    data
+  })
+}

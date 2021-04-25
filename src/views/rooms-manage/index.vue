@@ -120,7 +120,7 @@
 
 <script>
 import { getHotel, editRoomType, delRoomType } from '@/api/room-manage/roomType'
-import { getRoom, addRoom, delRoom } from '@/api/room-manage/room'
+import { getRoom, addRoom, delRoom, editRoom } from '@/api/room-manage/room'
 import addRoomType from './module/addRoomType'
 import typeForm from './module/roomTypeForm'
 import mHeader from './module/header'
@@ -222,25 +222,48 @@ export default {
       row.htype = this.roomType[this.roomTypeSelected - 1].label
       
       // 提交到后台
-      const data = {
-        hid: row.hid,
-        htype: row.htype,
-        roomNo: row.roomNo
-      }
-      try {
-        const res = await addRoom(data)
-        this.$notify({
-          title: '成功',
-          message: res.message,
-          type: 'success'
-        })
-      } catch (error) {
-        console.log('增加房间', error);
-      } finally {
-        row.isEdit = false
-        this.addRoomRow = false
-        await this.fetchDataType()
-        await this.fetchDataRoom()
+      if(this.addRoomRow) {
+        try {
+          const data = {
+            hid: row.hid,
+            htype: row.htype,
+            roomNo: row.roomNo
+          }
+          const res = await addRoom(data)
+          this.$notify({
+            title: '成功',
+            message: res.message,
+            type: 'success'
+          })
+        } catch (error) {
+          console.log('增加房间', error);
+        } finally {
+          row.isEdit = false
+          this.addRoomRow = false
+          await this.fetchDataType()
+          await this.fetchDataRoom()
+        }
+      } else {
+        try {
+          const data = {
+            rid: row.rid,
+            hid: row.hid,
+            htype: row.htype,
+            roomNo: row.roomNo
+          }
+          const res = await editRoom(data)
+          this.$notify({
+            title: '成功',
+            message: res.message,
+            type: 'success'
+          })
+        } catch (error) {
+          console.log('编辑房间', error);
+        } finally {
+          row.isEdit = false
+          await this.fetchDataType()
+          await this.fetchDataRoom()
+        }
       }
     },
     cancelRoom(row) {
