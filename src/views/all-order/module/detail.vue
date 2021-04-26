@@ -27,9 +27,9 @@
             {{ form.htype }}
           </el-form-item>
           <el-form-item label="状态">
-            <template>
-              <el-tag type="danger">{{ form.status }}</el-tag>
-            </template>
+            <el-tag type="success" v-if="form.state === 0">{{ bookStatusEnum[form.state].L }}</el-tag>
+            <el-tag type="primary" v-if="form.state === 1">{{ bookStatusEnum[form.state].L }}</el-tag>
+            <el-tag type="info" v-if="form.state === 2">{{ bookStatusEnum[form.state].L }}</el-tag>
           </el-form-item>
           <el-form-item label="入住日期">
             {{ form.inDay + '-' + form.outDay}}
@@ -59,19 +59,23 @@ export default {
   },
   data () {
     return {
-      form: {
-        bid: 222,
-        inDay: '2020-3-8',
-        outDay: '2031-3-2',
-        days: '4',
-        status: '已入住',
-        pname: '姚思佳',
-        phone: '1222222',
-        pIdentity: '223444',
-        money: '34',
-        htype: '豪华大床房'
-      }
+      form: {},
+       bookStatusEnum : [
+        { L: '待入住', K: 'WAIT_IN', V: 1 },
+        { L: '已入住', K: 'WAIT_OUT', V:2 },
+        { L: '已退房', K: 'LEAVE', V: 3 }
+      ]
     };
+  },
+
+  watch: {
+    detailRow: {
+      handler(val) {
+        if(val) {
+          this.form = val
+        }
+      }
+    }
   },
 
   components: {},
