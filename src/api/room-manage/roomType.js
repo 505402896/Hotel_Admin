@@ -28,7 +28,6 @@ export function editRoomType(data) {
 export function delRoomType(hid) {
   return request({
     url: `/api/hotel/delRoomType/${hid}`,
-    // url: '/api/hotel/delRoomType',
     method: 'delete'
   })
 }
