@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="container">
-    <m-header />
+    <m-header :head-data="headData"/>
     <el-row>
       <el-col :span="12">
         <div class="left" />
@@ -26,7 +26,9 @@ export default {
       userTotal: undefined,
       weChatTotal: undefined,
       webTotal: undefined,
-      roomType: []
+      headData: {},
+      roomType: [],
+      roomTypeSum: []
     };
   },
 
@@ -91,7 +93,7 @@ export default {
         series: [{
           name: '次数',
           type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
+          data: this.roomTypeSum
         }]
       });
     },
@@ -103,13 +105,43 @@ export default {
         this.hotelTotal = res.hotelTotal
         this.roomTotal = res.roomTotal
         this.userTotal = res.userTotal
-        res.book.map(v =>{
-          this.roomType.push(v.htype)
-        })
-        this.roomType = Array.from(new Set(this.roomType))
+        this.headData = {
+          'hotelTotal': res.hotelTotal,
+          'roomTotal': res.roomTotal,
+          'userTotal': res.userTotal
+        }
+        this.roomType = this.changeRoomType(res.book)
+        this.roomTypeSum = this.changeRoomTypeSum(res.book)
       } catch (error) {
         console.log('获取数据汇总', error)
       }
+    },
+    changeRoomType(data) {
+      let roomType = []
+      data.map(v => {
+        roomType.push(v.htype)
+      })
+      return Array.from(new Set(roomType))
+    },
+    changeRoomTypeSum(data) {
+      let roomType = []
+      let roomTypeSum = []
+      data.map(v => {
+        roomType.push(v.htype)
+      })
+      let json = {};
+      for (let i=0;i < roomType.length; i++){
+        //判断数组中的元素，在json中是否存在属性值。
+        if (json[roomType[i]]) {
+          json[roomType[i]] += 1;
+        } else {
+          json[roomType[i]] = 1;
+        }
+      }
+      for(let j in json) {
+        roomTypeSum.push(json[j])
+      }
+      return roomTypeSum
     }
   }
 }

@@ -5,19 +5,19 @@
       <el-col :span="6">
         <el-card shadow="always">
           <span>房间类型</span>
-          <p>22</p>
+          <p>{{ data.hotelTotal }}</p>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card shadow="always">
           <span>房间总数</span>
-          <p>32</p>
+          <p>{{ data.roomTotal }}</p>
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card shadow="always">
           <span>用户总数</span>
-          <p>222</p>
+          <p>{{ data.userTotal }}</p>
         </el-card>
       </el-col>
       <el-col :span="6">
@@ -32,6 +32,12 @@
 
 <script>
 export default {
+  props: {
+    headData: {
+      type: Object,
+      default: undefined
+    }
+  },
   data () {
     return {
     };
@@ -39,7 +45,11 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    data() {
+      return this.headData
+    }
+  },
 
   mounted() {},
 
