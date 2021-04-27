@@ -14,18 +14,29 @@
 </template>
 
 <script>
+import { getDataView } from '@/api/data-view/data-view'
 import mHeader from './module/header'
 export default {
   data () {
     return {
       myChartR: null,
-      myChartL: null
+      myChartL: null,
+      hotelTotal: undefined,
+      roomTotal: undefined,
+      userTotal: undefined,
+      weChatTotal: undefined,
+      webTotal: undefined,
+      roomType: []
     };
   },
 
   components: { mHeader },
 
   computed: {},
+
+  created() {
+    this.fetchData()
+  },
 
   mounted() {
     this.$nextTick(() => {
@@ -49,8 +60,8 @@ export default {
             radius: '55%',
             // roseType: 'angle',  南丁格尔图
             data:[
-              {value:75, name:'WeChat'},
-              {value:25, name:'Web'}
+              {value: this.weChatTotal, name:'WeChat'},
+              {value: this.webTotal, name:'Web'}
             ],
              emphasis: {
               itemStyle: {
@@ -66,7 +77,7 @@ export default {
       this.myChartR = this.$echarts.init(document.querySelector('.right'))
       this.myChartR.setOption({
         title: {
-          text: 'ECharts 入门示例'
+          text: '房间预定统计'
         },
         tooltip: {},
         color: ['#34bfa3'],
@@ -74,15 +85,31 @@ export default {
           data: ['销量']
         },
         xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+          data: this.roomType
         },
         yAxis: {},
         series: [{
-          name: '销量',
+          name: '次数',
           type: 'bar',
           data: [5, 20, 36, 10, 10, 20]
         }]
       });
+    },
+    async fetchData() {
+      try {
+        const res = await getDataView()
+        this.weChatTotal = res.weChatTotal
+        this.webTotal = res.webTotal
+        this.hotelTotal = res.hotelTotal
+        this.roomTotal = res.roomTotal
+        this.userTotal = res.userTotal
+        res.book.map(v =>{
+          this.roomType.push(v.htype)
+        })
+        this.roomType = Array.from(new Set(this.roomType))
+      } catch (error) {
+        console.log('获取数据汇总', error)
+      }
     }
   }
 }
