@@ -15,8 +15,8 @@
       <el-table-column prop="inDay" label="入住日期" />
       <el-table-column prop="outDay" label="退房日期" />
       <el-table-column prop="status" key="status" label="状态">
-        <template slot-scope="scope">
-          <el-tag type="warning">{{ scope.row.status }}</el-tag>
+        <template>
+          <el-tag type="warning">未入住</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="200">
@@ -31,39 +31,16 @@
 </template>
 
 <script>
+import { getWaitInBook, checkIn } from '@/api/order-manage/waitIn-order'
+import { delBook } from '@/api/order-manage/all-order'
 import mHeader from './module/header'
 import Pagination from '@/components/common/Pagination'
 export default {
   name:'wait-order',
   data () {
     return {
-      tableData:[
-        {
-          bid:'2',
-          htype:'大床房',
-          pname:'王子杰',
-          inDay:'2020-1-2',
-          outDay:'2021-2-3',
-          status: '未入住'
-        },
-        {
-          bid:'2',
-          htype:'大床房',
-          pname:'王子杰',
-          inDay:'2020-1-2',
-          outDay:'2021-2-3',
-          status: '未入住'
-        },
-        {
-          bid:'2',
-          htype:'大床房',
-          pname:'王子杰',
-          inDay:'2020-1-2',
-          outDay:'2021-2-3',
-          status: '未入住'
-        }
-      ],
-      total: 67,
+      tableData:[],
+      total: 1,
       currentPage: 1
     };
   },
@@ -87,19 +64,37 @@ export default {
     handleCurrentChange(val) {
       this.currentRow = val;
     },
-    checkIn(row){
-      // 办理入住
-    },
-    cancel(row){
-      this.$confirm('确认取消订单？')
-        .then(_ => {
-          
+    async checkIn(row){
+      try {
+        const res = await checkIn(row.bid)
+        this.$notify({
+          title: "成功",
+          message: res.message,
+          type: "success"
         })
-        .catch(_ => {});
+      } catch (error) {
+        console.log('办理入住', error)
+      } finally {
+        await this.fetchData()
+      }
+    },
+    async cancel(row){
+      try {
+        const res = await delBook(row.bid)
+        this.$notify({
+          title: "成功",
+          message: res.message,
+          type: "success"
+        })
+      } catch (error) {
+        console.log('取消订单', error);
+      }
     },
     async fetchData(){
       try{
-        // 获取数据
+        const res = await getWaitInBook(this.currentPage)
+        this.total = res.total
+        this.tableData = res.data
       }catch(error){
         console.log('wait-order', error);
       }finally{

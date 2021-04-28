@@ -45,8 +45,8 @@
         </template>
       </el-table-column>
       <el-table-column prop="status" key="status" label="状态">
-        <template slot-scope="scope">
-          <el-tag type="danger">{{ scope.row.status }}</el-tag>
+        <template>
+          <el-tag type="danger">已入住</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="200">
@@ -68,27 +68,17 @@
 </template>
 
 <script>
+import { getInBook } from '@/api/order-manage/in-order'
 import mHeader from './module/header'
 import Pagination from '@/components/common/Pagination'
 export default {
   name: 'in-order',
   data () {
     return {
-      tableData: [
-        {
-          bid: 22,
-          htype: '大床房',
-          pname: '姚思佳',
-          inDay: '2020-3-4',
-          outDay: '2021-4-5',  // 遗留bug picker返回数据不对
-          status: '已入住',
-          changeType: false,
-          changeOutDate: false
-        }
-      ],
+      tableData: [],
       roomType: {},  // 存所有房间类型
       roomTypeSelected: undefined, // 编辑后选中的房间类型
-      total: 67,
+      total: 1,
       currentPage: 1
     };
   },
@@ -101,7 +91,7 @@ export default {
     // 页数发生变化时候改变数据  包括页数为1时
     currentPage: {
       handler(){
-        // this.fetchData();
+        this.fetchData()
       },
       immediate: true
     }
@@ -130,6 +120,15 @@ export default {
     cancel(row){
       row.changeType = false;
       row.changeOutDate = false;
+    },
+    async fetchData() {
+      try {
+        const res = await getInBook(this.currentPage)
+        this.total = res.total
+        this.tableData = res.data
+      } catch (error) {
+        console.log('获取已入住订单', error)
+      }
     }
   }
 }

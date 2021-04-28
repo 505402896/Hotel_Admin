@@ -4,7 +4,8 @@ export function request(config) {
     // 1.创建实例
     const instance = axios.create({
         baseURL: 'http://localhost:8081',
-        timeout: 5000
+        timeout: 5000,
+        headers: { 'Content-Type': 'application/json' }
     })
     // axios的拦截器
     instance.interceptors.request.use(config => {
