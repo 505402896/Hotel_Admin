@@ -79,6 +79,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  base: '/Hotel_Admin/',  // 部署后访问的基础路径
   routes
 })
 

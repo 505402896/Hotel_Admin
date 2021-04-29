@@ -41,9 +41,7 @@ export default {
   },
 
   mounted() {
-    this.$nextTick(() => {
-      this.init()
-    })
+    
   },
 
   methods: {
@@ -112,6 +110,9 @@ export default {
         }
         this.roomType = this.changeRoomType(res.book)
         this.roomTypeSum = this.changeRoomTypeSum(res.book)
+        this.$nextTick(() => {
+          this.init()
+        })
       } catch (error) {
         console.log('获取数据汇总', error)
       }
@@ -153,6 +154,6 @@ export default {
 }
 .left,.right{
   width: 50%;
-  height: 400px;
+  height: 500px;
 }
 </style>

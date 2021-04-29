@@ -3,7 +3,8 @@ import axios from 'axios'
 export function request(config) {
     // 1.创建实例
     const instance = axios.create({
-        baseURL: 'http://localhost:8081',
+        baseURL: 'http://121.196.145.100:8081',
+        // baseURL: 'http://localhost:8081',
         timeout: 5000,
         headers: { 'Content-Type': 'application/json' }
     })
