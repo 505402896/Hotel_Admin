@@ -40,9 +40,7 @@ export default {
     this.fetchData()
   },
 
-  mounted() {
-    
-  },
+  mounted() {},
 
   methods: {
     init(){
