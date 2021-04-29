@@ -8,10 +8,10 @@ export function getWaitInBook(page) {
   })
 }
 
-export function checkIn(bid) {
+export function checkIn(data) {
   return request({
     url: '/api/book/checkIn',
     method: 'post',
-    data: bid
+    data
   })
 }

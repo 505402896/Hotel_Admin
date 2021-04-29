@@ -66,7 +66,10 @@ export default {
     },
     async checkIn(row){
       try {
-        const res = await checkIn(row.bid)
+        const data = {
+          bid: row.bid
+        }
+        const res = await checkIn(data)
         this.$notify({
           title: "成功",
           message: res.message,
