@@ -16,7 +16,8 @@
             <el-select size="small" v-model="roomTypeSelected" placeholder="请选择">
               <el-option
                 v-for="item in roomType"
-                :key="item.value"
+                :key="item.key"
+                :value="item.value"
                 :label="item.label">
               </el-option>
             </el-select>
@@ -27,7 +28,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="pname" label="用户名" />
-      <el-table-column prop="inDay" label="入住日期" />
+      <el-table-column prop="inDay" label="入住日期" min-width="150" />
       <el-table-column prop="outDay" label="退房日期" min-width="150">
         <template slot-scope="scope">
           <template v-if="scope.row.changeOutDate">
@@ -68,7 +69,8 @@
 </template>
 
 <script>
-import { getInBook } from '@/api/order-manage/in-order'
+import { getInBook, editBook, checkOut } from '@/api/order-manage/in-order'
+import { getAllRoomType } from '@/api/room-manage/roomType'
 import mHeader from './module/header'
 import Pagination from '@/components/common/Pagination'
 export default {
@@ -76,7 +78,7 @@ export default {
   data () {
     return {
       tableData: [],
-      roomType: {},  // 存所有房间类型
+      roomType: [],  // 存所有房间类型
       roomTypeSelected: undefined, // 编辑后选中的房间类型
       total: 1,
       currentPage: 1
@@ -103,8 +105,29 @@ export default {
     handleCurrentChange(val) {
       this.currentRow = val;
     },
-    checkOut(row){
+    async checkOut(row){
       // 退房
+      try {
+        let date = new Date()
+        let year = date.getFullYear()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
+        let currentDay = year + '-' + month + '-' + day
+        const data = {
+          bid: row.bid,
+          outDay: currentDay
+        }
+        const res = await checkOut(data)
+        this.$notify({
+            title: '成功',
+            message: res.message,
+            type: 'success'
+          })
+      } catch (error) {
+        console.log('退房操作', error);
+      } finally {
+        this.fetchData()
+      }
     },
     keepIn(row){
       // 续住
@@ -114,8 +137,41 @@ export default {
       // 更换房型
       row.changeType = true;
     },
-    save(row){
-
+    async save(row){
+      try {
+        if(this.roomTypeSelected) {
+        let htype = this.roomType[this.roomTypeSelected-1].label
+        let hid = this.roomType[this.roomTypeSelected-1].key
+        let data = {
+          bid: row.bid, 
+          htype: htype,
+          hid: hid 
+        }
+        let res = await editBook(data)
+        this.$notify({
+            title: '成功',
+            message: res.message,
+            type: 'success'
+          })
+      } else {
+        let data = {
+          bid: row.bid,
+          outDay: row.outDay
+        }
+        let res = await editBook(data)
+        this.$notify({
+            title: '成功',
+            message: res.message,
+            type: 'success'
+          })
+      }     
+      } catch (error) {
+        console.log('编辑订单', error);
+      } finally {
+        row.changeOutDate = false
+        row.changeType = false
+        await this.fetchData()
+      }
     },
     cancel(row){
       row.changeType = false;
@@ -125,9 +181,28 @@ export default {
       try {
         const res = await getInBook(this.currentPage)
         this.total = res.total
-        this.tableData = res.data
+        this.tableData = res.data.map(v => {
+          v.changeOutDate = false
+          v.changeType = false
+          return v
+        })
       } catch (error) {
         console.log('获取已入住订单', error)
+      } finally {
+        this.roomType = []
+        let index = 1
+        const data = await getAllRoomType()
+        data.data.map(v => {
+          let type = {
+            value: index,
+            label: v.htype,
+            key: v.hid
+          }
+          // 存储所有房间类型
+          this.roomType.push(type)
+          index++
+          return v
+        })
       }
     }
   }

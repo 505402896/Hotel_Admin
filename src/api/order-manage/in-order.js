@@ -7,3 +7,19 @@ export function getInBook(page) {
     params: { page }
   })
 }
+
+export function editBook(data) {
+  return request({
+    url: '/api/book/editBook',
+    method: 'post',
+    data
+  })
+}
+
+export function checkOut(data) {
+  return request({
+    url: '/api/book/checkOut',
+    method: 'post',
+    data
+  })
+}

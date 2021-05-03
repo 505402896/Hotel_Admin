@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { getHotel, editRoomType, delRoomType } from '@/api/room-manage/roomType'
+import { getHotel, editRoomType, delRoomType, getAllRoomType } from '@/api/room-manage/roomType'
 import { getRoom, addRoom, delRoom, editRoom } from '@/api/room-manage/room'
 import addRoomType from './module/addRoomType'
 import typeForm from './module/roomTypeForm'
@@ -218,7 +218,8 @@ export default {
       }
     },
     async saveRoom(row) {
-      row.hid = this.roomTypeSelected
+
+      row.hid = this.roomType[this.roomTypeSelected - 1].key
       row.htype = this.roomType[this.roomTypeSelected - 1].label
       
       // 提交到后台
@@ -320,9 +321,28 @@ export default {
         this.loading = true
         const res = await getHotel(this.currentPageType)
         this.totalType = res.total
+        // this.roomType = []
+        // let index = 1
+        this.roomTypeTableData = res.data.map(v => {
+          // let type = {
+          //   value: index,
+          //   label: v.htype,
+          //   key: v.hid
+          // }
+          // // 存储所有房间类型
+          // this.roomType.push(type)
+          // index++
+          v.isEdit = false
+          return v
+        })
+      } catch (error) {
+        console.log('获取客房信息', error)
+      } finally {
+        this.loading = false
         this.roomType = []
         let index = 1
-        this.roomTypeTableData = res.data.map(v => {
+        const data = await getAllRoomType()
+        data.data.map(v => {
           let type = {
             value: index,
             label: v.htype,
@@ -331,13 +351,8 @@ export default {
           // 存储所有房间类型
           this.roomType.push(type)
           index++
-          v.isEdit = false
           return v
         })
-      } catch (error) {
-        console.log('获取客房信息', error)
-      } finally {
-        this.loading = false
       }
     },
      async fetchDataRoom(){

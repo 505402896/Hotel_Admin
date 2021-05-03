@@ -31,3 +31,10 @@ export function delRoomType(hid) {
     method: 'delete'
   })
 }
+
+export function getAllRoomType() {
+  return request({
+    url: '/api/common/getAllRoomType',
+    method: 'get'
+  })
+}

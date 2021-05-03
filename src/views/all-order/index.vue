@@ -14,8 +14,8 @@
       <el-table-column prop="bid" label="订单号" />
       <el-table-column prop="htype" label="房间类型" />
       <el-table-column prop="pname" label="用户名" />
-      <el-table-column prop="inDay" label="入住日期" />
-      <el-table-column prop="outDay" label="退房日期" />
+      <el-table-column prop="inDay" label="入住日期" min-width="150" />
+      <el-table-column prop="outDay" label="退房日期" min-width="150" />
       <el-table-column prop="state" key="state" label="状态">
         <template slot-scope="scope">
           <el-tag type="success" v-if="scope.row.state === 0">{{
