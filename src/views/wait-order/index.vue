@@ -97,7 +97,11 @@ export default {
       try{
         const res = await getWaitInBook(this.currentPage)
         this.total = res.total
-        this.tableData = res.data
+        this.tableData = res.data.map(v => {
+          v.inDay = v.inDay.substring(0, 10)
+          v.outDay = v.outDay.substring(0, 10)
+          return v
+        })
       }catch(error){
         console.log('wait-order', error);
       }finally{

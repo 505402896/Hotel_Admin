@@ -127,7 +127,11 @@ export default {
         this.loading = true;
         const res = await getBook(this.currentPage);
         this.total = res.total;
-        this.tableData = res.data;
+        this.tableData = res.data.map(v => {
+          v.inDay = v.inDay.substring(0, 10)
+          v.outDay = v.outDay.substring(0, 10)
+          return v
+        })
       } catch (error) {
         console.log("获取全部订单信息", error);
       } finally {
@@ -140,11 +144,19 @@ export default {
         if (this.search === 'bid') {
           const res = await getBookById(this.searchVal);
           this.total = res.total;
-          this.tableData = res.data
+          this.tableData = res.data.map(v => {
+            v.inDay = v.inDay.substring(0, 10)
+            v.outDay = v.outDay.substring(0, 10)
+            return v
+          })
         } else if(this.search === 'realName') {
           const res = await getBookByRealName(this.searchVal);
           this.total = res.total;
-          this.tableData = res.data
+          this.tableData = res.data.map(v => {
+            v.inDay = v.inDay.substring(0, 10)
+            v.outDay = v.outDay.substring(0, 10)
+            return v
+          })
         }
       } catch (error) {
         console.log("由" + this.searchVal + "搜索", error);

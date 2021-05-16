@@ -236,13 +236,13 @@ export default {
             message: res.message,
             type: 'success'
           })
+          await this.fetchDataType()
+          await this.fetchDataRoom()
         } catch (error) {
           console.log('增加房间', error);
         } finally {
           row.isEdit = false
           this.addRoomRow = false
-          await this.fetchDataType()
-          await this.fetchDataRoom()
         }
       } else {
         try {
@@ -258,12 +258,12 @@ export default {
             message: res.message,
             type: 'success'
           })
+          await this.fetchDataType()
+          await this.fetchDataRoom()
         } catch (error) {
           console.log('编辑房间', error);
         } finally {
           row.isEdit = false
-          await this.fetchDataType()
-          await this.fetchDataRoom()
         }
       }
     },

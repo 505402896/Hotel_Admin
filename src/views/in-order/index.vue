@@ -184,6 +184,8 @@ export default {
         this.tableData = res.data.map(v => {
           v.changeOutDate = false
           v.changeType = false
+          v.inDay = v.inDay.substring(0, 10)
+          v.outDay = v.outDay.substring(0, 10)
           return v
         })
       } catch (error) {

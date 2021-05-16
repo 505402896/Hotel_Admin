@@ -36,7 +36,7 @@
             <el-upload
               class="upload-demo"
               ref="upload"
-              :action="`http://localhost:8081/api/hotel/addRoomType`"
+              :action="`http://121.196.145.100:8081/api/hotel/addRoomType`"
               accept="image/*"
               :limit="1"
               :data="form"

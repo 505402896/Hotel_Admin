@@ -4,10 +4,14 @@
     <m-header :head-data="headData"/>
     <el-row>
       <el-col :span="12">
-        <div class="left" />
+        <el-card shadow="always">
+          <div class="left" />
+        </el-card>       
       </el-col>
       <el-col :span="12">
-        <div class="right" />
+        <el-card shadow="always">
+          <div class="right" />
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -78,7 +82,7 @@ export default {
           text: '房间预定统计'
         },
         tooltip: {},
-        color: ['#34bfa3'],
+        color: ['#fb7299'],
         legend: {
           data: ['销量']
         },

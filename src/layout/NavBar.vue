@@ -5,7 +5,7 @@
       <el-breadcrumb-item class="title">首页</el-breadcrumb-item>
       <el-breadcrumb-item class="title">{{ $route.meta.name }}</el-breadcrumb-item>
       <span class="user">
-        <el-avatar :size="40" src="@/assets/image/genshin.jpg'"></el-avatar>
+        <el-avatar :size="35" src="http://121.196.145.100:8080/assets/hotel/img/genshen.jpg"></el-avatar>
           <span class="username">超级管理员</span>
       </span>
     </el-breadcrumb>
@@ -52,7 +52,7 @@ export default {
 .el-avatar{
   position: absolute;
   right: 150px;
-  margin-top: 5px;
+  margin-top: 7.5px;
 }
 .username{
   position: absolute;
