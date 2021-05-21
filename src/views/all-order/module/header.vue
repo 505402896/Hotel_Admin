@@ -8,16 +8,6 @@
       <el-col :span="4">
         <el-input placeholder="根据用户名搜索" size="small" clearable v-model="username"/>
       </el-col>
-      <el-col :span="4">
-        <el-select v-model="status" size="small" filterable clearable placeholder="根据订房状态搜索">
-          <el-option
-            v-for="item in bookStatusEnum"
-            :key="item.K"
-            :label="item.L"
-            :value="item.V">
-          </el-option>
-        </el-select>
-      </el-col>
       <el-col :span="2">
         <el-button type="success" icon="el-icon-search" size="small" @click="toSearch">搜索</el-button>
       </el-col>

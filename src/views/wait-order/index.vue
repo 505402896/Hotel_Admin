@@ -19,6 +19,18 @@
           <el-tag type="warning">未入住</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="roomNo" label="房间号">
+        <template slot-scope="scope">
+          <el-select size="small" v-model="scope.row.roomNo" placeholder="请选择">
+            <el-option
+              v-for="item in scope.row.roomNoArr"
+              :key="item.key"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" min-width="200">
         <template slot-scope="scope">
           <el-button type="success" icon="el-icon-edit" size="mini" @click="checkIn(scope.row)">入住</el-button>
@@ -41,7 +53,9 @@ export default {
     return {
       tableData:[],
       total: 1,
-      currentPage: 1
+      currentPage: 1,
+      roomNoArr: [],
+      roomSelected: undefined
     };
   },
   components: { mHeader, Pagination },
@@ -66,8 +80,17 @@ export default {
     },
     async checkIn(row){
       try {
+        let rid
+        row.roomNoArr.map(v=>{
+          console.log(v, row.roomNo);
+          if(v.label === row.roomNo) {
+            rid = v.key
+          }
+        })
         const data = {
-          bid: row.bid
+          bid: row.bid,
+          rid: rid,
+          roomNo: row.roomNo
         }
         const res = await checkIn(data)
         this.$notify({
@@ -97,9 +120,16 @@ export default {
       try{
         const res = await getWaitInBook(this.currentPage)
         this.total = res.total
-        this.tableData = res.data.map(v => {
+        this.tableData = res.data.data.map(v => {
           v.inDay = v.inDay.substring(0, 10)
           v.outDay = v.outDay.substring(0, 10)
+          v.roomNoArr = []
+          v.roomNo = undefined
+          res.data.room.map(r => {
+            if (v.hid === r.hid) {
+              v.roomNoArr.push({key: r.rid, label: r.roomNo, value: r.roomNo})
+            }
+          })
           return v
         })
       }catch(error){

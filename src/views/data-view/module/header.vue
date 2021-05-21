@@ -23,7 +23,7 @@
       <el-col :span="6">
         <el-card shadow="hover">
           <span>员工总数</span>
-          <p>24</p>
+          <p>1</p>
         </el-card>
       </el-col>
     </el-row>
@@ -35,33 +35,31 @@ export default {
   props: {
     headData: {
       type: Object,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
-  data () {
-    return {
-    };
+  data() {
+    return {};
   },
 
   components: {},
 
   computed: {
     data() {
-      return this.headData
-    }
+      return this.headData;
+    },
   },
 
   mounted() {},
 
-  methods: {}
-}
-
+  methods: {},
+};
 </script>
 <style scoped>
-.el-card{
+.el-card {
   width: 80%;
 }
-.header{
+.header {
   margin-bottom: 100px;
 }
 </style>

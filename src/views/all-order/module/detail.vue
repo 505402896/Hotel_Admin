@@ -40,6 +40,9 @@
           <el-form-item label="总价">
             {{ form.money + ' 元' }}
           </el-form-item>
+          <el-form-item label="房间号">
+            {{ form.roomNo }}
+          </el-form-item>
       </el-form>
     </el-drawer>
   </div>

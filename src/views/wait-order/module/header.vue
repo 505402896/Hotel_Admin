@@ -6,7 +6,7 @@
         <el-input placeholder="根据订单号搜索" size="small" clearable v-model="bid"/>
       </el-col>
       <el-col :span="2">
-        <el-button type="success" icon="el-icon-search" size="small" @click="search">搜索</el-button>
+        <el-button type="success" icon="el-icon-search" size="small" @click="toSearch">搜索</el-button>
       </el-col>
     </el-row>
   </div>
